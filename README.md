@@ -1,4 +1,4 @@
-```markdown
+
 # 📖 Bible Module for ROBLOX
 Welcome to the **Bible Module**—a feature-rich, developer-friendly tool designed for ROBLOX developers to integrate Bible functionality into their games. This module allows fetching Bible verses, searching passages, using multiple translations, and much more.
 
