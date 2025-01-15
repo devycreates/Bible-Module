@@ -86,31 +86,6 @@ BibleModule.Config = {
 
 ---
 
-## 💡 Contributing
-We welcome contributions! To contribute:
-1. **Fork this repository** and clone it locally.
-2. Make changes or add features in a new branch:
-   ```bash
-   git checkout -b feature-new-feature
-   ```
-3. Test your changes in ROBLOX Studio.
-4. Push the branch to your fork and create a Pull Request.
-
-### Contributor Guidelines
-- Follow the existing code structure and style.
-- Add comments for new functions or configurations.
-- Test your changes thoroughly before submitting a PR.
-
-### Reporting Issues
-If you encounter a bug or have a feature request:
-1. Check if it’s already reported in the [Issues](https://github.com/devycreates/BibleModule/issues) tab.
-2. If not, create a new issue with:
-   - A descriptive title.
-   - Steps to reproduce the issue.
-   - Screenshots or logs, if applicable.
-
----
-
 ## 📜 License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
