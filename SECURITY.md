@@ -5,7 +5,8 @@ We actively support the following versions of the Bible Module:
 
 | Version    | Supported          |
 |------------|--------------------|
-| 0.0.1     | ✅ Fully Supported |
+| 0.0.2     | ✅ Fully Supported |
+| 0.0.1     | ✅ Supported |
 | 0.0.0     | ❌ No Longer Supported |
 
 Please upgrade to the latest version to ensure you have the most secure and stable experience.
