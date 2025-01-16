@@ -1,23 +1,23 @@
 --[[
 =======================================================
-?? BibleModule.lua - A Public ROBLOX Bible Tool
+📖 BibleModule.lua - A Public ROBLOX Bible Tool
 =======================================================
-Welcome to the BibleModule! ??? This module allows you 
+Welcome to the BibleModule! 🙏✨ This module allows you 
 to fetch Bible verses, passages, and perform advanced 
-searches. It�s packed with features, debug tools, and 
+searches. It’s packed with features, debug tools, and 
 customization options for any ROBLOX developer.
 
-?? IMPORTANT: Do not edit below the "SETTINGS" section 
+🛑 IMPORTANT: Do not edit below the "SETTINGS" section 
 unless you're an advanced user.
 
-? Features:
+✨ Features:
 - Fetch single verses or passages.
 - Multi-translation support.
 - Advanced search by multiple criteria.
 - Debugging tools for troubleshooting.
 - Fully customizable with emoji and style options.
 
-Created with ?? to make your ROBLOX projects inspiring.
+Created with ❤️ to make your ROBLOX projects inspiring.
 =======================================================
 --]]
 
@@ -27,7 +27,7 @@ local BibleModule = {}
 BibleModule.Cache = {}
 
 --=======================
--- ?? SETTINGS
+-- ⚙️ SETTINGS
 --=======================
 BibleModule.Config = {
 	BaseURL = "https://bible-api.com/", -- Replace with a valid API URL
@@ -35,11 +35,11 @@ BibleModule.Config = {
 	DebugMode = true, -- Toggle debug messages ON/OFF
 	VerseStyle = "emoji", -- Options: "plain", "emoji", "mixed"
 	Emojis = { -- Customize emojis for visual enhancement
-		Cross = "??",
-		Bible = "??",
-		Light = "??",
-		PrayerHands = "??",
-		Heart = "??",
+		Cross = "✝️",
+		Bible = "📖",
+		Light = "💡",
+		PrayerHands = "🙏",
+		Heart = "❤️",
 	},
 	Translations = { -- Supported translations
 		["King James Version"] = "kjv",
@@ -49,7 +49,7 @@ BibleModule.Config = {
 }
 
 --=======================
--- ?? MODULE FUNCTIONS
+-- 📖 MODULE FUNCTIONS
 --=======================
 
 -- Debugging utility
@@ -70,7 +70,7 @@ function BibleModule:TestAPI()
 		self:DebugLog("API Test Successful! Response: " .. response)
 		return true
 	else
-		warn("? API Test Failed! Check your BaseURL or network settings.")
+		warn("❌ API Test Failed! Check your BaseURL or network settings.")
 		return false
 	end
 end
@@ -122,7 +122,7 @@ function BibleModule:FetchVerse(book, chapter, verse, translation)
 	end
 
 	warn(self.Config.ErrorMessage)
-	return "Unable to fetch verse. Please verify the details. ??"
+	return "Unable to fetch verse. Please verify the details. 💡"
 end
 
 -- Fetch a passage of multiple verses
@@ -165,12 +165,12 @@ function BibleModule:SearchByCriteria(criteria)
 		end
 	end
 
-	warn("?? Search failed. Check your input or API configuration.")
+	warn("🚨 Search failed. Check your input or API configuration.")
 	return {}
 end
 
 --=======================
--- ?? PUBLIC INTERFACE
+-- 🌟 PUBLIC INTERFACE
 --=======================
 BibleModule.GetVerse = BibleModule.FetchVerse
 BibleModule.GetPassage = BibleModule.FetchPassage
