@@ -32,8 +32,8 @@ BibleModule.Cache = {}
 -- ⚙️ SETTINGS
 --=======================
 BibleModule.Config = {
-    BaseURL = "https://bible-api.com/", -- Replace with a valid API URL
-    TTSBaseURL = "https://text-to-speech-api.com/convert", -- Replace with a valid TTS API URL
+    BaseURL = "https://bible-api.com/", -- Replace with a secure and reputable API URL
+    TTSBaseURL = "https://text-to-speech-api.com/convert", -- Replace with a secure and reputable TTS API URL
     DefaultTranslation = "kjv", -- Default translation (e.g., "kjv", "niv")
     DebugMode = true, -- Toggle debug messages ON/OFF
     VerseStyle = "emoji", -- Options: "plain", "emoji", "mixed"
@@ -48,7 +48,8 @@ BibleModule.Config = {
         ["King James Version"] = "kjv",
         ["New International Version"] = "niv",
         ["English Standard Version"] = "esv",
-    }
+    },
+    AudioCacheExpiration = 3600 -- Cache expiration time in seconds
 }
 
 --=======================
@@ -105,8 +106,8 @@ function BibleModule:FetchVerse(book, chapter, verse, translation)
 
     -- Cache check
     local cacheKey = string.format("%s:%d:%d:%s", book, chapter, verse, translation)
-    if self.Cache[cacheKey] then
-        return self.Cache[cacheKey]
+    if self.Cache[cacheKey] and (os.time() - self.Cache[cacheKey].timestamp < self.Config.AudioCacheExpiration) then
+        return self.Cache[cacheKey].data
     end
 
     -- API request
@@ -119,7 +120,7 @@ function BibleModule:FetchVerse(book, chapter, verse, translation)
         local data = HttpService:JSONDecode(response)
         if data and data.text then
             local result = self:AddEmojis(data.text)
-            self.Cache[cacheKey] = result
+            self.Cache[cacheKey] = { data = result, timestamp = os.time() }
             return result
         end
     end
@@ -138,9 +139,15 @@ function BibleModule:FetchPassage(book, chapter, startVerse, endVerse, translati
     return table.concat(verses, " ")
 end
 
+-- Validate and sanitize input for URL
+function BibleModule:SanitizeInput(input)
+    return input:gsub("[^%w+]", "")
+end
+
 -- Generate TTS audio URL
 function BibleModule:GenerateTTSURL(text, translation)
-    local params = HttpService:UrlEncode(string.format("text=%s&translation=%s", text, translation))
+    local sanitizedText = self:SanitizeInput(text)
+    local params = HttpService:UrlEncode(string.format("text=%s&translation=%s", sanitizedText, translation))
     return self.Config.TTSBaseURL .. "?" .. params
 end
 
@@ -163,7 +170,7 @@ function BibleModule:PlayVerseAudio(book, chapter, verse, translation)
             sound:Play()
             return true
         else
-            warn("❌ Failed to fetch audio. Check your TTS API or network settings.")
+            warn("❌ Failed to fetch audio. Possible causes: network issues, invalid URLs, or missing assets. Please check your TTS API or network settings.")
             return false
         end
     else
@@ -177,7 +184,10 @@ function BibleModule:PlayPassageAudio(book, chapter, startVerse, endVerse, trans
     self:DebugLog(string.format("Playing audio for passage: %s %d:%d-%d", book, chapter, startVerse, endVerse))
 
     for i = startVerse, endVerse do
-        self:PlayVerseAudio(book, chapter, i, translation)
+        local success = self:PlayVerseAudio(book, chapter, i, translation)
+        if not success then
+            warn("❌ Audio for verse " .. chapter .. ":" .. i .. " is unavailable.")
+        end
     end
 end
 
