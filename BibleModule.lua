@@ -125,7 +125,7 @@ function BibleModule:FetchVerse(book, chapter, verse, translation)
         end
     end
 
-    warn(self.Config.ErrorMessage)
+    warn(self.Config.ErrorMessage or "Unable to fetch verse. Please verify the details. 💡")
     return "Unable to fetch verse. Please verify the details. 💡"
 end
 
